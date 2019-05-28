@@ -1,0 +1,18 @@
+web:
+    image: 'gitlab/gitlab-ce:latest'
+    restart: always
+    hostname: 'localhost'
+    environment:
+      GITLAB_OMNIBUS_CONFIG: |
+        external_url 'http://localhost:9010'
+        gitlab_rails['gitlab_shell_ssh_port'] = 2022
+        gitlab_rails['time_zone'] = 'Asia/Tokyo'
+        gitlab_rails['backup_path'] = '/var/opt/gitlab/backups'
+        gitlab_rails['backup_keep_time'] = 864000
+    ports:
+      - '9010:9010'
+      - '2022:22'
+    volumes:
+      - .\gitlab\etc:/etc/gitlab
+      - .\gitlab\logs:/var/log/gitlab
+      - .\gitlab\data:/var/opt/gitlab
