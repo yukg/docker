@@ -1,0 +1,35 @@
+version: '2'
+
+networks:
+  bridge:
+    driver: bridge
+
+services:
+  mongodb:
+    image: mongo
+    container_name: mongodb
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=nSbQ40l5Kq2BmkGPSZCI
+    volumes:
+      - mongodata:/data/db
+      - mongoconfig:/data/configdb
+    ports:
+      - '27017:27017'
+    restart: always
+  mongo-express:
+    container_name: mongo-express
+    links:
+      - 'mongodb:mongo'
+    ports:
+      - '8081:8081'
+    environment:
+      - ME_CONFIG_MONGODB_ADMINUSERNAME=root
+      - ME_CONFIG_MONGODB_ADMINPASSWORD=nSbQ40l5Kq2BmkGPSZCI
+      - ME_CONFIG_BASICAUTH_USERNAME=meadmin
+      - ME_CONFIG_BASICAUTH_PASSWORD=0dcqZFf0ITyPjv8nJNgD
+    image: mongo-express:latest
+    restart: always
+volumes:
+  mongodata:
+  mongoconfig:
