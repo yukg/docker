@@ -1,0 +1,18 @@
+version: '2'
+
+networks:
+  bridge:
+    driver: bridge
+
+services:
+  portainer:
+    image: portainer/portainer:1.20.2
+    container_name: portainer
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainerdata:/data
+    ports:
+      - '9000:9000'
+    restart: always
+volumes:
+  portainerdata:
